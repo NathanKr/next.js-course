@@ -1,11 +1,14 @@
 import type { NextPage } from "next";
-import Link from "next/link";
+import Image from "next/image";
+import styles from "../styles/home.module.css";
 
 const Home: NextPage = () => {
-  return <div>
-   
-    This is Home page
-    </div>;
+  return (
+    <div className={styles.container}>
+      <h2>This is Home page !</h2>
+      <Image width="800" height="533" src="/images/home-domenico-loia-hGV2TfOh0ns-unsplash.jpg" alt="home" />
+    </div>
+  );
 };
 
 export default Home;

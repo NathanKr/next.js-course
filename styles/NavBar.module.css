@@ -1,0 +1,16 @@
+.NavBar{
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.NavBar button{
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.NavBar h1{
+    margin: 0;
+    padding: 0;
+}
