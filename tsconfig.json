@@ -13,7 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": "." // --- add by Nathan 12/07/22
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/gen-ui/MuiSnackbar.tsx"],
   "exclude": ["node_modules"]

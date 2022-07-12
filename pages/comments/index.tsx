@@ -1,10 +1,10 @@
 import { AlertColor } from "@mui/material";
 import path from "path";
 import { FC } from "react";
-import MuiSnackbar from "../../src/components/gen-ui/MuiSnackbar";
-import ICommentShort from "../../src/types/ICommentShort";
-import { getServerAbsoluteUrl } from "../../src/utils/server/server-utils";
-import styles from '../../styles/comments.module.css';
+import MuiSnackbar from "src/components/gen-ui/MuiSnackbar";
+import ICommentShort from "src/types/ICommentShort";
+import { getServerAbsoluteUrl } from "src/utils/server/server-utils";
+import styles from "styles/comments.module.css";
 
 import {
   AiOutlineFileAdd,
@@ -12,6 +12,7 @@ import {
   AiOutlineInfoCircle,
   AiFillEdit,
 } from "react-icons/ai";
+import Link from "next/link";
 
 interface IProps {
   commentsShort: ICommentShort[];
@@ -49,7 +50,9 @@ const Comments: FC<IProps> = ({ commentsShort, sevirity, message }) => {
       <span>{it.description}</span>
       <AiOutlineDelete />
       <AiFillEdit />
-      <AiOutlineInfoCircle />
+      <Link href={`/comments/${it.id}`}>
+        <AiOutlineInfoCircle />
+      </Link>
     </div>
   ));
 
