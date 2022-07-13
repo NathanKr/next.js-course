@@ -6,6 +6,7 @@ import { FC } from "react";
 import MuiSnackbar from "src/components/gen-ui/MuiSnackbar";
 import IComment from "src/types/IComment";
 import { getServerAbsoluteUrl } from "src/utils/server/server-utils";
+import styles from 'styles/comment-details.module.css';
 
 interface IProps {
   details: IComment | null;
@@ -17,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params as any;
   let props: IProps = {
     details: null,
-    sevirity: "success",
+    sevirity: "error",
     message: "",
   };
 
@@ -41,33 +42,32 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const CommentDetails: FC<IProps> = ({ details, sevirity, message }) => {
-  //   const router = useRouter();
-  //   const { id } = router.query;
-  //   console.log(`id : ${id}`);
-
-  if (sevirity != "success") {
-    return (
-      <MuiSnackbar
-        isOpen={true}
-        durationMs={6000}
-        sevirity={sevirity}
-        message={message}
-      />
-    );
-  }
-
-  if (!details) {
-    return <div>Comment is not defined ...</div>;
-  }
-
-  return (
-    <div>
-      CommentDetails
-      <span>{details.id}</span>
-      <span>{details.author}</span>
-      <span>{details.email}</span>
-      <span>{details.description}</span>
-    </div>
+  return sevirity != "success" || !details ? (
+    <MuiSnackbar
+      isOpen={true}
+      durationMs={6000}
+      sevirity={sevirity}
+      message={message}
+    />
+  ) : (
+    <>
+      <div className={styles.grid_item}>
+        <span>id</span>
+        <span>{details.id}</span>
+      </div>
+      <div className={styles.grid_item}>
+        <span>author</span>
+        <span>{details.author}</span>
+      </div>
+      <div className={styles.grid_item}>
+        <span>email</span>
+        <span>{details.email}</span>
+      </div>
+      <div className={styles.grid_item}>
+        <span>description</span>
+        <span>{details.description}</span>
+      </div>
+    </>
   );
 };
 

@@ -59,7 +59,10 @@ const Comments: FC<IProps> = ({ commentsShort, sevirity, message }) => {
   return (
     <div className={styles.comments}>
       <h2>Comments</h2>
+      <Link href='/comments/create'>
       <AiOutlineFileAdd />
+      </Link>
+      
       {elems}
       {sevirity != "success" ? (
         <MuiSnackbar

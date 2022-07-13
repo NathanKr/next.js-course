@@ -1,0 +1,20 @@
+###
+GET http://localhost:3000/api/comments
+
+
+###
+GET http://localhost:3000/api/comments/1
+
+###
+POST http://localhost:3000/api/comments
+Content-Type: application/json
+
+{
+    "description" : "desc1",
+    "author": "author1",
+    "email": "Barack@whitehouse.gov"
+}
+
+
+###
+GET http://localhost:3000/api/posts

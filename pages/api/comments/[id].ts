@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import IComment from "src/types/IComment";
-import comments from "data/comments.json";
+import { getComments } from "src/utils/server/comments-storage";
 
 function getComment(id: number): IComment | undefined {
-  return comments.find((it) => it.id == id);
+  return getComments().find((it) => it.id == id);
 }
 
 export default function handleCommentWithId(
