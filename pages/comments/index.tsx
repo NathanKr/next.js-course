@@ -99,8 +99,10 @@ const Comments: FC<IProps> = (props) => {
         }}
         children={<AiOutlineDelete />}
       />
+      <Link href={`/comments/edit/${it.id}`}>
+        <AiFillEdit />
+      </Link>
 
-      <AiFillEdit />
       <Link href={`/comments/${it.id}`}>
         <AiOutlineInfoCircle />
       </Link>

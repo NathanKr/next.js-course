@@ -21,3 +21,15 @@ GET http://localhost:3000/api/posts
 
 ###
 DELETE  http://localhost:3000/api/comments/1
+
+
+###
+PATCH  http://localhost:3000/api/comments/1
+Content-Type: application/json
+
+{
+    "description" : "desc11",
+    "author": "author11",
+    "email": "Barack11@whitehouse.gov",
+    "id": 1
+}

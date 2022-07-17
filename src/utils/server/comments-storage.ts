@@ -4,6 +4,18 @@ import comments from "data/comments.json";
 import IComment from "src/types/IComment";
 import ICommentShort from "src/types/ICommentShort";
 
+export function editComment(comment : IComment) : boolean{
+  const indexFound : number = comments.findIndex(it => comment.id == it.id);
+
+  if(indexFound < 0){
+    return false;
+  }
+
+  comments[indexFound] = comment;
+  saveComments();
+  return true;
+}
+
 export function deleteComment(id: number) : boolean {
   const indexFound : number = comments.findIndex(comment => comment.id == id);
 
