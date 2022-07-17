@@ -40,8 +40,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const CommentEdit: FC<IProps> = ({ details, sevirity, message }) => {
+const CommentEdit: FC<IProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [sevirity,setSevirity] = useState(props.sevirity);
+  const [message,setMessage] = useState(props.message);
+  const {details} = props;
 
   function editComment(evt: SyntheticEvent): void {
     evt.preventDefault();
@@ -57,60 +60,68 @@ const CommentEdit: FC<IProps> = ({ details, sevirity, message }) => {
   }
 
   async function sendEditCommentToServer(commentToEdit: IComment) {
+    setIsOpen(false);
     try {
       const response = await axios.patch(
         `/api/comments/${commentToEdit.id}`,
         commentToEdit
       );
       await response.data;
-      sevirity = "success";
-      message = "Comment is edited";
+      setSevirity("success");
+      setMessage("Comment is edited");
       setIsOpen(true);
     } catch (error) {
-      sevirity = "error";
-      message = "Comment is not edited";
+      setSevirity("error");
+      setMessage("Comment is not edited");
       setIsOpen(true);
       console.error(error);
     }
   }
 
-  return isOpen  || sevirity != "success" || !details ? 
-     (
-      <MuiSnackbar
-        isOpen={true}
-        durationMs={6000}
-        sevirity={sevirity}
-        message={message}
-      />
-    ) 
-   : (
+  const elemSnackBar = (
+    <MuiSnackbar
+      isOpen={true}
+      durationMs={6000}
+      sevirity={sevirity}
+      message={message}
+    />
+  );
+
+  const elemForm = (
     <form onSubmit={editComment}>
       <Stack spacing={2}>
         <TextField
           required
           name="author"
           label="Author"
-          defaultValue={details.author}
+          defaultValue={details ? details.author : ""}
         />
         <TextField
           required
           type="email"
           name="email"
           label="Email"
-          defaultValue={details.email}
+          defaultValue={details ? details.email : ""}
         />
         <TextField
           required
           name="description"
           label="Description"
-          defaultValue={details.description}
+          defaultValue={details ? details.description : ""}
         />
         <Button variant="contained" type="submit">
           Edit Comment
         </Button>
       </Stack>
     </form>
-  )
+  );
+
+  return (
+    <>
+      {elemForm}
+      {isOpen || sevirity != "success" ? elemSnackBar : ""}
+    </>
+  );
 };
 
 export default CommentEdit;
