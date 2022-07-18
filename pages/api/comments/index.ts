@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import ICommentShort from "src/types/ICommentShort";
 import { addComment, getCommentsShort, saveComments } from "src/utils/server/comments-storage";
+import { isCommentValidIgnoreId } from "src/utils/server/validation";
 
 
 export default function handler(
@@ -20,6 +21,10 @@ switch (req.method) {
 
   case 'POST':
     const newComment = req.body;
+    if(!isCommentValidIgnoreId(newComment)){
+      return res.status(400).send('')
+    }
+
     newComment.id = Date.now();
     addComment(newComment);
     saveComments();

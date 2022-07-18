@@ -4,7 +4,7 @@ import SimpleAccordion, {
 } from "../src/components/gen-ui/SimpleAccordion";
 import IPost from "../src/types/IPost";
 import path from "path";
-import { getServerAbsoluteUrl } from "../src/utils/server/server-utils";
+import { getConcatedRelativeUrlToBaseServer } from "../src/utils/server/server-utils";
 import MuiSnackbar from "../src/components/gen-ui/MuiSnackbar";
 import { AlertColor } from "@mui/material";
 
@@ -23,7 +23,7 @@ export async function getStaticProps() {
     message: ""
   }
 
-  const url = path.join(getServerAbsoluteUrl(), "/api/posts");
+  const url = getConcatedRelativeUrlToBaseServer("/api/posts");
 
   try {
     const response = await fetch(url);

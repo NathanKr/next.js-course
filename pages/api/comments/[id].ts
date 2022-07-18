@@ -6,6 +6,7 @@ import {
   editComment,
   getComment,
 } from "src/utils/server/comments-storage";
+import { isCommentValidIgnoreId } from "src/utils/server/validation";
 
 export default function handleCommentWithId(
   req: NextApiRequest,
@@ -29,7 +30,7 @@ export default function handleCommentWithId(
     case "PATCH":
       {
         const comment: IComment = req.body;
-        if (comment.id != id) {
+        if (comment.id != id || !isCommentValidIgnoreId(comment)) {
           return res.status(400).send("");
         }
 

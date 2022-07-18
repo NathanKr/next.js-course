@@ -5,7 +5,7 @@ import path from "path";
 import React, { FC, SyntheticEvent, useState } from "react";
 import MuiSnackbar from "src/components/gen-ui/MuiSnackbar";
 import IComment from "src/types/IComment";
-import { getServerAbsoluteUrl } from "src/utils/server/server-utils";
+import { getConcatedRelativeUrlToBaseServer } from "src/utils/server/server-utils";
 
 interface IProps {
   details: IComment | null;
@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 
   if (id) {
-    const url = path.join(getServerAbsoluteUrl(), `/api/comments/${id}`);
+    const url = getConcatedRelativeUrlToBaseServer(`/api/comments/${id}`);
 
     try {
       const response = await fetch(url);

@@ -1,9 +1,9 @@
-import { AlertColor, Button } from "@mui/material";
+import { AlertColor, Tooltip } from "@mui/material";
 import path from "path";
 import { FC, useState } from "react";
 import MuiSnackbar from "src/components/gen-ui/MuiSnackbar";
 import ICommentShort from "src/types/ICommentShort";
-import { getServerAbsoluteUrl } from "src/utils/server/server-utils";
+import { getConcatedRelativeUrlToBaseServer } from "src/utils/server/server-utils";
 import styles from "styles/comments.module.css";
 
 import {
@@ -32,7 +32,9 @@ export async function getServerSideProps() {
   };
   // -- get comments
 
-  const url = path.join(getServerAbsoluteUrl(), "/api/comments");
+  const url =getConcatedRelativeUrlToBaseServer ("/api/comments");
+  console.log(url);
+  
 
   try {
     const response = await fetch(url);
@@ -98,14 +100,26 @@ const Comments: FC<IProps> = (props) => {
           console.log("clicked no");
         }}
       >
-        <AiOutlineDelete />
+        <Tooltip title="Delete comment">
+          <a>
+            <AiOutlineDelete />
+          </a>
+        </Tooltip>
       </DialogYesNo>
       <Link href={`/comments/edit/${it.id}`}>
-        <AiFillEdit />
+        <Tooltip title="Edit comment">
+          <a>
+            <AiFillEdit />
+          </a>
+        </Tooltip>
       </Link>
 
       <Link href={`/comments/${it.id}`}>
-        <AiOutlineInfoCircle />
+        <Tooltip title="Comment details">
+          <a>
+            <AiOutlineInfoCircle />
+          </a>
+        </Tooltip>
       </Link>
     </div>
   ));
@@ -114,7 +128,10 @@ const Comments: FC<IProps> = (props) => {
     <div className={styles.comments}>
       <h2>Comments</h2>
       <Link href="/comments/create">
-        <AiOutlineFileAdd />
+        <Tooltip  title='Add comment'>
+          <a><AiOutlineFileAdd /></a>
+        </Tooltip>
+        
       </Link>
 
       {elems}

@@ -1,11 +1,9 @@
-import { AlertColor, Snackbar } from "@mui/material";
-import { useRouter } from "next/router";
+import { AlertColor} from "@mui/material";
 import { GetServerSideProps } from "next/types";
-import path from "path";
 import { FC } from "react";
 import MuiSnackbar from "src/components/gen-ui/MuiSnackbar";
 import IComment from "src/types/IComment";
-import { getServerAbsoluteUrl } from "src/utils/server/server-utils";
+import { getConcatedRelativeUrlToBaseServer } from "src/utils/server/server-utils";
 import styles from 'styles/comment-details.module.css';
 
 interface IProps {
@@ -23,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 
   if (id) {
-    const url = path.join(getServerAbsoluteUrl(), `/api/comments/${id}`);
+    const url = getConcatedRelativeUrlToBaseServer(`/api/comments/${id}`);
 
     try {
       const response = await fetch(url);
