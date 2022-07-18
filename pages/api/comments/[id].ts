@@ -34,7 +34,7 @@ export default function handleCommentWithId(
         }
 
         const isEditOk = editComment(comment);
-        isEditOk ? res.status(400).send("") : res.status(404).send("");
+        isEditOk ? res.status(200).send("") : res.status(404).send("");
       }
 
       break;
