@@ -97,8 +97,9 @@ const Comments: FC<IProps> = (props) => {
         noClickHandler={() => {
           console.log("clicked no");
         }}
-        children={<AiOutlineDelete />}
-      />
+      >
+        <AiOutlineDelete />
+      </DialogYesNo>
       <Link href={`/comments/edit/${it.id}`}>
         <AiFillEdit />
       </Link>
