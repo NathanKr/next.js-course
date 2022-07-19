@@ -4,6 +4,14 @@ export function getConcatedRelativeUrlToBaseServer(relativeUrl : string) : strin
     return (new URL(url, base)).toString();
 }
 
+// 
+
 function getServerAbsoluteUrl() : string{
-    return 'http://localhost:3000';
+    return isProduction() ? 'https://next-js-course-psi.vercel.app' : 'http://localhost:3000';
+}
+
+function isProduction() : boolean{
+    console.log(process.env.NODE_ENV);
+    
+    return process.env.NODE_ENV == 'production';
 }
