@@ -3,7 +3,10 @@ import path from "path";
 import { FC, useState } from "react";
 import MuiSnackbar from "src/components/gen-ui/MuiSnackbar";
 import ICommentShort from "src/types/ICommentShort";
-import { getConcatedRelativeUrlToBaseServer } from "src/utils/server/server-utils";
+import {
+  getConcatedRelativeUrlToBaseServer,
+  isProduction,
+} from "src/utils/server/server-utils";
 import styles from "styles/comments.module.css";
 
 import {
@@ -32,9 +35,8 @@ export async function getServerSideProps() {
   };
   // -- get comments
 
-  const url =getConcatedRelativeUrlToBaseServer ("/api/comments");
+  const url = getConcatedRelativeUrlToBaseServer("/api/comments");
   console.log(url);
-  
 
   try {
     const response = await fetch(url);
@@ -88,31 +90,35 @@ const Comments: FC<IProps> = (props) => {
   const elems = commentsShort.map((it, i) => (
     <div className={styles.grid_container} key={i}>
       <span>{it.description}</span>
-      <DialogYesNo
-        dialogTitle="Are you sure you want to delete this comment ?"
-        dialogContent="You can not recover this operation"
-        yes="Agree"
-        yesClickHandler={() => {
-          deleteComment(it.id);
-        }}
-        no="Disagree"
-        noClickHandler={() => {
-          console.log("clicked no");
-        }}
-      >
-        <Tooltip title="Delete comment">
-          <a>
-            <AiOutlineDelete />
-          </a>
-        </Tooltip>
-      </DialogYesNo>
-      <Link href={`/comments/edit/${it.id}`}>
-        <Tooltip title="Edit comment">
-          <a>
-            <AiFillEdit />
-          </a>
-        </Tooltip>
-      </Link>
+      {!isProduction() ? (
+        <DialogYesNo
+          dialogTitle="Are you sure you want to delete this comment ?"
+          dialogContent="You can not recover this operation"
+          yes="Agree"
+          yesClickHandler={() => {
+            deleteComment(it.id);
+          }}
+          no="Disagree"
+          noClickHandler={() => {
+            console.log("clicked no");
+          }}
+        >
+          <Tooltip title="Delete comment">
+            <a>
+              <AiOutlineDelete />
+            </a>
+          </Tooltip>
+        </DialogYesNo>
+      ) : null}
+      {!isProduction() ? (
+        <Link href={`/comments/edit/${it.id}`}>
+          <Tooltip title="Edit comment">
+            <a>
+              <AiFillEdit />
+            </a>
+          </Tooltip>
+        </Link>
+      ) : null}
 
       <Link href={`/comments/${it.id}`}>
         <Tooltip title="Comment details">
@@ -128,10 +134,11 @@ const Comments: FC<IProps> = (props) => {
     <div className={styles.comments}>
       <h2>Comments</h2>
       <Link href="/comments/create">
-        <Tooltip  title='Add comment'>
-          <a><AiOutlineFileAdd /></a>
+        <Tooltip title="Add comment">
+          <a>
+            <AiOutlineFileAdd />
+          </a>
         </Tooltip>
-        
       </Link>
 
       {elems}

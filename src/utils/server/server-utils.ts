@@ -10,8 +10,6 @@ function getServerAbsoluteUrl() : string{
     return isProduction() ? 'https://next-js-course-psi.vercel.app' : 'http://localhost:3000';
 }
 
-function isProduction() : boolean{
-    console.log(process.env.NODE_ENV);
-    
+export function isProduction() : boolean{
     return process.env.NODE_ENV == 'production';
 }
