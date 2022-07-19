@@ -3,6 +3,7 @@ import path from "path";
 import comments from "data/comments.json";
 import IComment from "src/types/IComment";
 import ICommentShort from "src/types/ICommentShort";
+import { isProduction } from "./server-utils";
 
 export function editComment(comment : IComment) : boolean{
   const indexFound : number = comments.findIndex(it => comment.id == it.id);
@@ -44,8 +45,10 @@ export function getComments(): IComment[] {
 }
 
 export function saveComments(): void {
-  const data = JSON.stringify(comments);
-  fs.writeFileSync(path.join("data", "comments.json"), data);
+  if(!isProduction()){
+    const data = JSON.stringify(comments);
+    fs.writeFileSync(path.join("data", "comments.json"), data);
+  }
 }
 
 export function addComment(newComment: IComment): void {
